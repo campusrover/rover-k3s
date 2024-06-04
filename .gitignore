@@ -1,0 +1,5 @@
+k3s.yaml*
+secrets.env
+.env
+.terraform
+*.tfstate.backup
