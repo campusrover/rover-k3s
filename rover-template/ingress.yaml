@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clouddesktop-ingress
+spec:
+  rules:
+    - host: "vnc.CD_USER.ros.campusrover.org"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: CD_USER-clouddesktop-service
+              port:
+                number: 80
+    - host: "code.CD_USER.ros.campusrover.org"
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: CD_USER-clouddesktop-service
+              port:
+                number: 8080

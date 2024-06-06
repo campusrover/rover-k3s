@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clouddesktop-system
+  labels:
+    name: clouddesktop-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clouddesktop-dev
+  labels:
+    name: clouddesktop-dev
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: clouddesktop-prod
+  labels:
+    name: clouddesktop-prod
