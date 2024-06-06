@@ -8,7 +8,7 @@ apply-dns:
 		-var "aws_access_key=${AWS_ACCESS_KEY}" \
 		-var "aws_secret_key=${AWS_SECRET_KEY}"
 
-add-user: add-user-files apply-dns apply-deployment
+add-user: add-rover-files apply-dns apply-deployment
 
 add-user-files:
 	cp -r clouddesktop-storage-template $(id)-clouddesktop-storage

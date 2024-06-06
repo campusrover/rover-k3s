@@ -6,16 +6,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rpsalas-clouddesktop-pod
+      app: leejs8128-clouddesktop-pod
   strategy: {}
   template:
     metadata:
       labels:
-        app: rpsalas-clouddesktop-pod
+        app: leejs8128-clouddesktop-pod
     spec:
       initContainers:
         - name: init-clouddesktop
-          image: cosi119/tb3-ros:dev-3
+          image: cosi119/rover-ros-environment:devel-001
           imagePullPolicy: Always 
           command: ["/bin/sh", "-c", "if [ -z \"$(ls -A /tmp)\" ]; then cp -n -r /my_ros_data/. /tmp/; fi"]
           volumeMounts:
@@ -23,7 +23,7 @@ spec:
               name: rospersistent
       containers:
         - name: clouddesktop
-          image: cosi119/tb3-ros:dev-3
+          image: cosi119/rover-ros-environment:devel-001
           imagePullPolicy: Always 
           env:
             - name: PASSWORD
@@ -33,7 +33,10 @@ spec:
             - name: VNC_PASSWORD
               value: dev@ros
             - name: AUTHKEY
-              value: whyaskwhy
+              valueFrom:
+                secretKeyRef:
+                  name: clouddesktop-prod-secrets
+                  key: tskey
           securityContext:
             capabilities:
               add: ["NET_ADMIN"]
@@ -48,11 +51,11 @@ spec:
               containerPort: 8080
           resources:
             requests:
-              cpu: 3
-              memory: 3.2Gi
+              cpu: 4
+              memory: 2.5Gi
             limits:
-              cpu: 16
-              memory: 16Gi
+              cpu: 8
+              memory: 8Gi
           volumeMounts:
             - mountPath: /dev/shm
               name: shm-volume
@@ -65,6 +68,6 @@ spec:
             sizeLimit: 1Gi
         - name: rospersistent
           persistentVolumeClaim:
-            claimName: rpsalas-clouddesktop-storage
+            claimName: leejs8128-clouddesktop-storage
       restartPolicy: Always
 status: {}
