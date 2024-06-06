@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clouddesktop-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test4-clouddesktop-pod
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: test4-clouddesktop-pod
+    spec:
+      initContainers:
+        - name: init-clouddesktop
+          image: cosi119/rover-ros-environment:devel-001
+          imagePullPolicy: Always 
+          command: ["/bin/sh", "-c", "if [ -z \"$(ls -A /tmp)\" ]; then cp -n -r /my_ros_data/. /tmp/; fi"]
+          volumeMounts:
+            - mountPath: /tmp
+              name: rospersistent
+      containers:
+        - name: clouddesktop
+          image: cosi119/rover-ros-environment:devel-001
+          imagePullPolicy: Always 
+          env:
+            - name: PASSWORD
+              value: dev@ros
+            - name: RESOLUTION
+              value: 1920x960
+            - name: VNC_PASSWORD
+              value: dev@ros
+            - name: AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: clouddesktop-prod-secrets
+                  key: tskey
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN"]
+          ports:
+            - name: novnc
+              containerPort: 80
+            - name: ssh
+              containerPort: 2222
+            - name: vnc
+              containerPort: 5900
+            - name: code
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 4
+              memory: 2.5Gi
+            limits:
+              cpu: 8
+              memory: 8Gi
+          volumeMounts:
+            - mountPath: /dev/shm
+              name: shm-volume
+            - mountPath: /my_ros_data
+              name: rospersistent
+      volumes:
+        - name: shm-volume
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: rospersistent
+          persistentVolumeClaim:
+            claimName: test4-clouddesktop-storage
+      restartPolicy: Always
+status: {}
