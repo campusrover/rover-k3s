@@ -4,7 +4,7 @@ metadata:
   name: clouddesktop-service
 spec:
   selector:
-    app: rpsalas-clouddesktop-pod
+    app: rpsalas1-clouddesktop-pod
   ports:
     - name: novnc
       protocol: TCP

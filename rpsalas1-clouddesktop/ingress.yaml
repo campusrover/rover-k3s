@@ -4,23 +4,23 @@ metadata:
   name: clouddesktop-ingress
 spec:
   rules:
-    - host: "vnc.rpsalas.ros.campusrover.org"
+    - host: "vnc.rpsalas1.ros.campusrover.org"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: rpsalas-clouddesktop-service
+              name: rpsalas1-clouddesktop-service
               port:
                 number: 80
-    - host: "code.rpsalas.ros.campusrover.org"
+    - host: "code.rpsalas1.ros.campusrover.org"
       http:
         paths:
         - path: /
           pathType: Prefix
           backend:
             service:
-              name: rpsalas-clouddesktop-service
+              name: rpsalas1-clouddesktop-service
               port:
                 number: 8080
