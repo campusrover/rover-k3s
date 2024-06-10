@@ -6,12 +6,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: rpsalas1-clouddesktop-pod
+      app: ezimmerman-clouddesktop-pod
   strategy: {}
   template:
     metadata:
       labels:
-        app: rpsalas1-clouddesktop-pod
+        app: ezimmerman-clouddesktop-pod
     spec:
       initContainers:
         - name: init-clouddesktop
@@ -68,6 +68,6 @@ spec:
             sizeLimit: 1Gi
         - name: rospersistent
           persistentVolumeClaim:
-            claimName: rpsalas1-clouddesktop-storage
+            claimName: ezimmerman-clouddesktop-storage
       restartPolicy: Always
 status: {}
