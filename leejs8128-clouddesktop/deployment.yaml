@@ -15,7 +15,7 @@ spec:
     spec:
       initContainers:
         - name: init-clouddesktop
-          image: cosi119/tb3-ros:dev-5
+          image: cosi119/rover-ros-environment:devel-002
           imagePullPolicy: Always 
           command: ["/bin/sh", "-c", "if [ -z \"$(ls -A /tmp)\" ]; then cp -n -r /my_ros_data/. /tmp/; fi"]
           volumeMounts:
@@ -23,7 +23,7 @@ spec:
               name: rospersistent
       containers:
         - name: clouddesktop
-          image: cosi119/tb3-ros:dev-5
+          image: cosi119/rover-ros-environment:devel-002
           imagePullPolicy: Always 
           env:
             - name: PASSWORD
@@ -52,10 +52,10 @@ spec:
           resources:
             requests:
               cpu: 4
-              memory: 2.5Gi
+              memory: 5Gi
             limits:
               cpu: 8
-              memory: 8Gi
+              memory: 12Gi
           volumeMounts:
             - mountPath: /dev/shm
               name: shm-volume
