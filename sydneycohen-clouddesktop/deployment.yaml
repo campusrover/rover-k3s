@@ -6,16 +6,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: CD_USER-clouddesktop-pod
+      app: sydneycohen-clouddesktop-pod
   strategy: {}
   template:
     metadata:
       labels:
-        app: CD_USER-clouddesktop-pod
+        app: sydneycohen-clouddesktop-pod
     spec:
       initContainers:
         - name: init-clouddesktop
-          image: cosi119/tb3-ros:dev-5
+          image: cosi119/rover-ros-environment:devel-003
           imagePullPolicy: Always 
           command: ["/bin/sh", "-c", "if [ -z \"$(ls -A /tmp)\" ]; then cp -n -r /my_ros_data/. /tmp/; fi"]
           volumeMounts:
@@ -23,7 +23,7 @@ spec:
               name: rospersistent
       containers:
         - name: clouddesktop
-          image: cosi119/tb3-ros:dev-5
+          image: cosi119/rover-ros-environment:devel-003
           imagePullPolicy: Always 
           env:
             - name: PASSWORD
@@ -52,7 +52,7 @@ spec:
           resources:
             requests:
               cpu: 4
-              memory: 3.5Gi
+              memory: 5Gi
             limits:
               cpu: 8
               memory: 12Gi
@@ -68,6 +68,6 @@ spec:
             sizeLimit: 1Gi
         - name: rospersistent
           persistentVolumeClaim:
-            claimName: CD_USER-clouddesktop-storage
+            claimName: sydneycohen-clouddesktop-storage
       restartPolicy: Always
 status: {}
