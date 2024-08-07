@@ -30,7 +30,7 @@ apply-deployment:
 	kubectl apply -k $(id)-clouddesktop-storage
 	kubectl apply -k $(id)-clouddesktop
 
-delete-user: delete-deployments delete-user-files
+delete-user: delete-deployments delete-user-files apply-dns
 
 delete-deployments:
 	kubectl delete -k $(id)-clouddesktop
